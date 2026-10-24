@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-ARQUIVO = Path("tarefas.json")
+ARQUIVO = Path(__file__).resolve().parent / "tarefas.json"
 
 
 def carregar_tarefas():
