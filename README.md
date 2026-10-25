@@ -73,3 +73,27 @@ Este projeto faz parte da prática de desenvolvimento de software, com foco em l
 Desenvolvido como projeto de prática em Python.
 
 **Repositório:** https://github.com/gabrielle-software/gerenciador-de-tarefas
+
+
+## Exemplo de utilização
+
+Ao executar o programa, o usuário pode interagir com um menu no terminal para gerenciar suas tarefas.
+
+Exemplo das operações disponíveis:
+
+* Adicionar uma nova tarefa.
+* Visualizar as tarefas cadastradas.
+* Marcar uma tarefa como concluída.
+* Excluir uma tarefa.
+* Encerrar o programa.
+
+## Aprendizados
+
+Com o desenvolvimento deste projeto, pratiquei:
+
+* Lógica de programação com Python.
+* Criação de funções e menus interativos.
+* Leitura e escrita de arquivos JSON.
+* Manipulação de caminhos e arquivos com `pathlib`.
+* Validação de entradas do usuário.
+* Organização de projetos e documentação com GitHub.
