@@ -97,3 +97,4 @@ Com o desenvolvimento deste projeto, pratiquei:
 * Manipulação de caminhos e arquivos com `pathlib`.
 * Validação de entradas do usuário.
 * Organização de projetos e documentação com GitHub.
+
