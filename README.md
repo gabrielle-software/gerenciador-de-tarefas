@@ -81,4 +81,91 @@ Este projeto faz parte do meu aprendizado em Engenharia de Software, com foco no
 
 Desenvolvido por **Gabrielle Sousa**.
 
+---
+
+## English Version
+
+# Python Task Manager
+
+A Python project developed to practice programming logic, file handling, and data persistence.
+
+The Task Manager allows users to add, list, complete, and delete tasks through an interactive terminal menu. Data is stored in a JSON file, allowing tasks to remain saved between program executions.
+
+### Menu Preview
+
+![Illustrative preview of the Task Manager menu](captura_gerenciador_tarefas.png)
+
+### Features
+
+- **Add tasks:** creates new tasks with descriptions.
+- **List tasks:** displays registered tasks and their status.
+- **Complete tasks:** updates a task's status to completed.
+- **Delete tasks:** removes a task from the list.
+- **Data persistence:** saves and loads tasks using a JSON file.
+- **Input validation:** handles empty descriptions, invalid numbers, and incorrect menu options.
+
+### Technologies Used
+
+- Python 3
+- JSON
+- Python standard library: `pathlib`
+- `unittest` for automated testing
+
+### How to Run the Project
+
+**Requirements**
+
+- Python 3 installed on your computer.
+
+**Step by step**
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/gabrielle-software/gerenciador-de-tarefas.git
+```
+
+2. Navigate to the project folder:
+
+```bash
+cd gerenciador-de-tarefas
+```
+
+3. Run the program:
+
+```bash
+python main.py
+```
+
+On Windows, you can use `py main.py` if necessary. On some Linux systems, you may need to use `python3 main.py`.
+
+### Data Storage
+
+Tasks are stored in a `tarefas.json` file, created in the same directory as `main.py` when the program saves a task for the first time.
+
+### Automated Tests
+
+The project uses Python's `unittest` library to test features such as:
+
+- Loading tasks when no file exists.
+- Saving and loading tasks.
+- Handling invalid JSON files.
+
+To run the tests locally:
+
+```bash
+python -m unittest -v
+```
+
+Tests are also automatically executed through GitHub Actions whenever the main branch is updated.
+
+### Project Goal
+
+This project is part of my Software Engineering learning journey, focusing on developing skills in Python, programming logic, code organization, data persistence, and automated testing.
+
+---
+
+Developed by **Gabrielle Sousa**.
+
+
 
