@@ -6,7 +6,9 @@
 Projeto desenvolvido em Python com o objetivo de praticar lógica de programação, manipulação de arquivos e persistência de dados.
 
 O Gerenciador de Tarefas permite cadastrar, listar, concluir e excluir tarefas por meio de um menu interativo no terminal. Os dados são armazenados em um arquivo JSON, permitindo que as tarefas permaneçam salvas entre execuções do programa.
+## Prévia do menu
 
+![Prévia ilustrativa do menu do Gerenciador de Tarefas](captura_gerenciador_tarefas.png)
 ## Funcionalidades
 
 - **Adicionar tarefas:** cadastra novas tarefas com descrição.
