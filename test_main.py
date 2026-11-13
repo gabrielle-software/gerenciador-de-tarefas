@@ -72,5 +72,35 @@ class TestGerenciadorDeTarefas(unittest.TestCase):
         tarefas = main.carregar_tarefas()
         self.assertEqual(tarefas, [])
 
+    def test_adicionar_tarefa_pelo_menu(self):
+        with patch("builtins.input", side_effect=["2", "Estudar SQL", "0"]):
+            main.main()
+
+        tarefas = main.carregar_tarefas()
+        self.assertEqual(len(tarefas), 1)
+        self.assertEqual(tarefas[0]["descricao"], "Estudar SQL")
+
+    def test_concluir_tarefa_pelo_menu(self):
+        main.salvar_tarefas([
+            {"descricao": "Estudar Python", "concluida": False}
+        ])
+
+        with patch("builtins.input", side_effect=["3", "1", "0"]):
+            main.main()
+
+        tarefas = main.carregar_tarefas()
+        self.assertTrue(tarefas[0]["concluida"])
+
+    def test_excluir_tarefa_pelo_menu(self):
+        main.salvar_tarefas([
+            {"descricao": "Estudar GitHub", "concluida": False}
+        ])
+
+        with patch("builtins.input", side_effect=["4", "1", "0"]):
+            main.main()
+
+        tarefas = main.carregar_tarefas()
+        self.assertEqual(tarefas, [])
+
 if __name__ == "__main__":
     unittest.main()
