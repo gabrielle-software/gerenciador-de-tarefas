@@ -1,100 +1,65 @@
-
 import json
+import tempfile
+import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-ARQUIVO = Path(__file__).resolve().parent / "tarefas.json"
-
-
-def carregar_tarefas():
-    if ARQUIVO.exists():
-        try:
-            return json.loads(ARQUIVO.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError):
-            print("Erro ao carregar as tarefas.")
-    return []
+import main
 
 
-def salvar_tarefas(tarefas):
-    ARQUIVO.write_text(
-        json.dumps(tarefas, ensure_ascii=False, indent=4),
-        encoding="utf-8"
-    )
+class TestGerenciadorDeTarefas(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.arquivo_original = main.ARQUIVO
+        main.ARQUIVO = Path(self.temp_dir.name) / "tarefas.json"
 
+    def tearDown(self):
+        main.ARQUIVO = self.arquivo_original
+        self.temp_dir.cleanup()
 
-def listar_tarefas(tarefas):
-    if not tarefas:
-        print("\nNenhuma tarefa cadastrada.")
-        return
+    def test_carregar_tarefas_sem_arquivo_retorna_lista_vazia(self):
+        self.assertEqual(main.carregar_tarefas(), [])
 
-    print("\n--- MINHAS TAREFAS ---")
-    for numero, tarefa in enumerate(tarefas, start=1):
-        status = "Concluída" if tarefa["concluida"] else "Pendente"
-        print(f'{numero}. [{status}] {tarefa["descricao"]}')
+    def test_carregar_tarefas_com_json_valido(self):
+        tarefas = [{"descricao": "Estudar Python", "concluida": False}]
+        main.ARQUIVO.write_text(json.dumps(tarefas), encoding="utf-8")
+        self.assertEqual(main.carregar_tarefas(), tarefas)
 
+    def test_carregar_tarefas_com_json_invalido_retorna_lista_vazia(self):
+        main.ARQUIVO.write_text("{json inválido", encoding="utf-8")
+        with patch("builtins.print") as imprimir:
+            resultado = main.carregar_tarefas()
+        self.assertEqual(resultado, [])
+        imprimir.assert_called_once_with("Erro ao carregar as tarefas.")
 
-def main():
-    tarefas = carregar_tarefas()
+    def test_salvar_tarefas_grava_json_corretamente(self):
+        tarefas = [{"descricao": "Revisar portfólio", "concluida": True}]
+        main.salvar_tarefas(tarefas)
+        dados_gravados = json.loads(main.ARQUIVO.read_text(encoding="utf-8"))
+        self.assertEqual(dados_gravados, tarefas)
 
-    while True:
-        print("\n=== GERENCIADOR DE TAREFAS ===")
-        print("1. Listar tarefas")
-        print("2. Adicionar tarefa")
-        print("3. Concluir tarefa")
-        print("4. Excluir tarefa")
-        print("0. Sair")
+    def test_listar_tarefas_vazias_informa_que_nao_ha_tarefas(self):
+        with patch("builtins.print") as imprimir:
+            main.listar_tarefas([])
+        imprimir.assert_called_once_with("\\nNenhuma tarefa cadastrada.")
 
-        opcao = input("Escolha uma opção: ").strip()
+    def test_listar_tarefas_exibe_status_e_descricao(self):
+        tarefas = [
+            {"descricao": "Estudar testes", "concluida": False},
+            {"descricao": "Atualizar README", "concluida": True},
+        ]
+        with patch("builtins.print") as imprimir:
+            main.listar_tarefas(tarefas)
+        saida = "\\n".join(str(chamada.args[0]) for chamada in imprimir.call_args_list)
+        self.assertIn("[Pendente] Estudar testes", saida)
+        self.assertIn("[Concluída] Atualizar README", saida)
 
-        if opcao == "1":
-            listar_tarefas(tarefas)
-
-        elif opcao == "2":
-            descricao = input("Descrição da tarefa: ").strip()
-            if descricao:
-                tarefas.append({
-                    "descricao": descricao,
-                    "concluida": False
-                })
-                salvar_tarefas(tarefas)
-                print("Tarefa adicionada!")
-            else:
-                print("A descrição não pode ficar vazia.")
-
-        elif opcao == "3":
-            listar_tarefas(tarefas)
-            if tarefas:
-                try:
-                    numero = int(input("Número da tarefa concluída: "))
-                    if 1 <= numero <= len(tarefas):
-                        tarefas[numero - 1]["concluida"] = True
-                        salvar_tarefas(tarefas)
-                        print("Tarefa concluída!")
-                    else:
-                        print("Número inválido.")
-                except ValueError:
-                    print("Digite um número válido.")
-
-        elif opcao == "4":
-            listar_tarefas(tarefas)
-            if tarefas:
-                try:
-                    numero = int(input("Número da tarefa a excluir: "))
-                    if 1 <= numero <= len(tarefas):
-                        tarefas.pop(numero - 1)
-                        salvar_tarefas(tarefas)
-                        print("Tarefa excluída!")
-                    else:
-                        print("Número inválido.")
-                except ValueError:
-                    print("Digite um número válido.")
-
-        elif opcao == "0":
-            print("Programa encerrado!")
-            break
-
-        else:
-            print("Opção inválida.")
+    def test_fluxo_adicionar_concluir_e_excluir_tarefa(self):
+        entradas = ["2", "Estudar Python", "3", "1", "4", "1", "0"]
+        with patch("builtins.input", side_effect=entradas), patch("builtins.print"):
+            main.main()
+        self.assertEqual(main.carregar_tarefas(), [])
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
