@@ -1,45 +1,48 @@
-
 # Gerenciador de Tarefas em Python
 
 [![Testes automatizados](https://github.com/gabrielle-software/gerenciador-de-tarefas/actions/workflows/tests.yml/badge.svg)](https://github.com/gabrielle-software/gerenciador-de-tarefas/actions/workflows/tests.yml)
 
-Projeto desenvolvido em Python com o objetivo de praticar lógica de programação, manipulação de arquivos e persistência de dados.
+Um projeto desenvolvido em Python para praticar lógica de programação, organização de código, manipulação de arquivos e persistência de dados.
 
-O Gerenciador de Tarefas permite cadastrar, listar, concluir e excluir tarefas por meio de um menu interativo no terminal. Os dados são armazenados em um arquivo JSON, permitindo que as tarefas permaneçam salvas entre execuções do programa.
+O programa permite adicionar, listar, concluir e excluir tarefas por meio de um menu interativo no terminal. As informações são armazenadas em um arquivo JSON, para que as tarefas continuem disponíveis entre as execuções.
+
 ## Prévia do menu
 
 ![Prévia ilustrativa do menu do Gerenciador de Tarefas](captura_gerenciador_tarefas.png)
+
 ## Funcionalidades
 
-- **Adicionar tarefas:** cadastra novas tarefas com descrição.
+- **Adicionar tarefas:** cadastra tarefas com uma descrição.
 - **Listar tarefas:** exibe as tarefas cadastradas e seus status.
-- **Concluir tarefas:** atualiza o status de uma tarefa para concluída.
-- **Excluir tarefas:** remove uma tarefa da lista.
-- **Persistência de dados:** salva e carrega tarefas utilizando um arquivo JSON.
+- **Concluir tarefas:** marca uma tarefa como concluída.
+- **Excluir tarefas:** remove uma tarefa cadastrada.
+- **Persistência de dados:** salva e carrega as tarefas em um arquivo JSON.
 - **Validação de entradas:** trata descrições vazias, números inválidos e opções incorretas do menu.
 
 ## Tecnologias utilizadas
 
 - Python 3
-- JSON
-- Biblioteca padrão `pathlib`
-- Biblioteca `unittest` para testes automatizados
+- JSON para armazenamento dos dados
+- `pathlib` para manipulação de caminhos e arquivos
+- `unittest` para testes automatizados
+- Git e GitHub para versionamento e hospedagem do projeto
+- GitHub Actions para execução automatizada dos testes
 
 ## Como executar o projeto
 
 ### Pré-requisitos
 
-- Python 3 instalado no computador.
+- Python 3 instalado.
 
-### Passo a passo
+### Instalação e execução
 
-1. Clone o repositório:
+1. Clone este repositório:
 
 ```bash
 git clone https://github.com/gabrielle-software/gerenciador-de-tarefas.git
 ```
 
-2. Entre na pasta do projeto:
+2. Acesse a pasta do projeto:
 
 ```bash
 cd gerenciador-de-tarefas
@@ -51,31 +54,39 @@ cd gerenciador-de-tarefas
 python main.py
 ```
 
-No Windows, se necessário, utilize `py main.py`. Em alguns sistemas Linux, pode ser necessário utilizar `python3 main.py`.
+No Windows, também é possível usar `py main.py`. Em alguns sistemas Linux, pode ser necessário usar `python3 main.py`.
 
 ## Armazenamento de dados
 
-As tarefas são armazenadas no arquivo `tarefas.json`, criado na mesma pasta do arquivo `main.py` quando o programa salva uma tarefa pela primeira vez.
+As tarefas são armazenadas no arquivo `tarefas.json`, criado na pasta do projeto quando uma tarefa é salva pela primeira vez.
 
 ## Testes automatizados
 
-O projeto utiliza a biblioteca `unittest` do Python para verificar funcionalidades como:
+O projeto possui **7 testes automatizados** escritos com a biblioteca `unittest`. Eles verificam:
 
-- Carregamento de tarefas sem arquivo existente.
-- Salvamento e carregamento de tarefas.
-- Tratamento de arquivos JSON inválidos.
+1. Se o programa retorna uma lista vazia quando o arquivo de tarefas ainda não existe.
+2. Se tarefas são carregadas corretamente a partir de um JSON válido.
+3. Se um JSON inválido é tratado sem interromper o programa.
+4. Se as tarefas são salvas corretamente no formato JSON.
+5. Se o programa informa quando não há tarefas cadastradas.
+6. Se a listagem apresenta corretamente a descrição e o status das tarefas.
+7. Se o fluxo de adicionar, concluir e excluir uma tarefa funciona como esperado.
 
-Para executar os testes localmente:
+Para executar os testes localmente, use:
 
 ```bash
 python -m unittest -v
 ```
 
-Os testes também são executados automaticamente pelo GitHub Actions a cada atualização na branch principal.
+### Integração contínua
 
-## Objetivo do projeto
+O GitHub Actions executa os testes automaticamente em atualizações (*push*) e em solicitações de alteração (*pull requests*) direcionadas à branch `main`. O workflow utiliza Python 3.12 e executa o comando `python -m unittest -v`.
 
-Este projeto faz parte do meu aprendizado em Engenharia de Software, com foco no desenvolvimento de habilidades em Python, lógica de programação, organização de código, persistência de dados e testes automatizados.
+O selo no início deste README mostra o status mais recente do workflow. [Consulte as execuções dos testes no GitHub Actions](https://github.com/gabrielle-software/gerenciador-de-tarefas/actions).
+
+## Objetivo de aprendizagem
+
+Este projeto faz parte da minha formação em Engenharia de Software. Seu desenvolvimento contribui para a prática de Python, lógica de programação, organização de código, persistência de dados e testes automatizados.
 
 ---
 
@@ -83,43 +94,45 @@ Desenvolvido por **Gabrielle Sousa**.
 
 ---
 
-## English Version
+# English Version
 
-# Python Task Manager
+## Python Task Manager
 
-A Python project developed to practice programming logic, file handling, and data persistence.
+A Python project created to practice programming logic, code organization, file handling, and data persistence.
 
-The Task Manager allows users to add, list, complete, and delete tasks through an interactive terminal menu. Data is stored in a JSON file, allowing tasks to remain saved between program executions.
+The application allows users to add, list, complete, and delete tasks through an interactive terminal menu. Task data is stored in a JSON file and remains available between program executions.
 
-### Menu Preview
+## Menu Preview
 
 ![Illustrative preview of the Task Manager menu](captura_gerenciador_tarefas.png)
 
-### Features
+## Features
 
-- **Add tasks:** creates new tasks with descriptions.
-- **List tasks:** displays registered tasks and their status.
-- **Complete tasks:** updates a task's status to completed.
-- **Delete tasks:** removes a task from the list.
+- **Add tasks:** creates tasks with a description.
+- **List tasks:** displays saved tasks and their status.
+- **Complete tasks:** marks a task as completed.
+- **Delete tasks:** removes a saved task.
 - **Data persistence:** saves and loads tasks using a JSON file.
 - **Input validation:** handles empty descriptions, invalid numbers, and incorrect menu options.
 
-### Technologies Used
+## Technologies Used
 
 - Python 3
-- JSON
-- Python standard library: `pathlib`
+- JSON for data storage
+- `pathlib` for file and path handling
 - `unittest` for automated testing
+- Git and GitHub for version control and project hosting
+- GitHub Actions for automated test execution
 
-### How to Run the Project
+## How to Run
 
-**Requirements**
+### Requirements
 
 - Python 3 installed on your computer.
 
-**Step by step**
+### Installation and Execution
 
-1. Clone the repository:
+1. Clone this repository:
 
 ```bash
 git clone https://github.com/gabrielle-software/gerenciador-de-tarefas.git
@@ -131,25 +144,29 @@ git clone https://github.com/gabrielle-software/gerenciador-de-tarefas.git
 cd gerenciador-de-tarefas
 ```
 
-3. Run the program:
+3. Run the application:
 
 ```bash
 python main.py
 ```
 
-On Windows, you can use `py main.py` if necessary. On some Linux systems, you may need to use `python3 main.py`.
+On Windows, you can also use `py main.py`. On some Linux systems, you may need to use `python3 main.py`.
 
-### Data Storage
+## Data Storage
 
-Tasks are stored in a `tarefas.json` file, created in the same directory as `main.py` when the program saves a task for the first time.
+Tasks are stored in a `tarefas.json` file, which is created in the project directory when a task is saved for the first time.
 
-### Automated Tests
+## Automated Tests
 
-The project uses Python's `unittest` library to test features such as:
+The project includes **7 automated tests** written with Python's `unittest` library. They check:
 
-- Loading tasks when no file exists.
-- Saving and loading tasks.
-- Handling invalid JSON files.
+1. Whether the application returns an empty list when the task file does not exist.
+2. Whether tasks are correctly loaded from valid JSON.
+3. Whether invalid JSON is handled without interrupting the application.
+4. Whether tasks are correctly saved in JSON format.
+5. Whether the application reports when there are no registered tasks.
+6. Whether the task list displays each description and status correctly.
+7. Whether the workflow for adding, completing, and deleting a task works as expected.
 
 To run the tests locally:
 
@@ -157,15 +174,16 @@ To run the tests locally:
 python -m unittest -v
 ```
 
-Tests are also automatically executed through GitHub Actions whenever the main branch is updated.
+### Continuous Integration
 
-### Project Goal
+GitHub Actions automatically runs the tests on pushes and pull requests targeting the `main` branch. The workflow uses Python 3.12 and runs `python -m unittest -v`.
 
-This project is part of my Software Engineering learning journey, focusing on developing skills in Python, programming logic, code organization, data persistence, and automated testing.
+The badge at the top of this README displays the latest workflow status. [View test runs on GitHub Actions](https://github.com/gabrielle-software/gerenciador-de-tarefas/actions).
+
+## Learning Goals
+
+This project is part of my Software Engineering studies. It helps me develop practical skills in Python, programming logic, code organization, data persistence, and automated testing.
 
 ---
 
 Developed by **Gabrielle Sousa**.
-
-
-
