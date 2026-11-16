@@ -34,9 +34,16 @@ class TestGerenciadorDeTarefas(unittest.TestCase):
 
     def test_salvar_tarefas_grava_json_corretamente(self):
         tarefas = [{"descricao": "Revisar portfólio", "concluida": True}]
-        main.salvar_tarefas(tarefas)
+        self.assertTrue(main.salvar_tarefas(tarefas))
         dados_gravados = json.loads(main.ARQUIVO.read_text(encoding="utf-8"))
         self.assertEqual(dados_gravados, tarefas)
+
+    def test_salvar_tarefas_informa_falha_de_gravacao(self):
+        tarefas = [{"descricao": "Estudar Python", "concluida": False}]
+        with patch.object(Path, "write_text", side_effect=OSError), patch("builtins.print") as imprimir:
+            resultado = main.salvar_tarefas(tarefas)
+        self.assertFalse(resultado)
+        imprimir.assert_called_once_with("Erro ao salvar as tarefas.")
 
     def test_listar_tarefas_vazias_informa_que_nao_ha_tarefas(self):
         with patch("builtins.print") as imprimir:
@@ -58,6 +65,15 @@ class TestGerenciadorDeTarefas(unittest.TestCase):
         entradas = ["2", "Estudar Python", "3", "1", "4", "1", "0"]
         with patch("builtins.input", side_effect=entradas), patch("builtins.print"):
             main.main()
+        self.assertEqual(main.carregar_tarefas(), [])
+
+    def test_fluxo_nao_confirma_adicao_quando_salvamento_falha(self):
+        entradas = ["2", "Estudar Python", "0"]
+        with patch("builtins.input", side_effect=entradas), patch("builtins.print") as imprimir:
+            with patch.object(main, "salvar_tarefas", return_value=False):
+                main.main()
+        mensagens = [str(chamada.args[0]) for chamada in imprimir.call_args_list]
+        self.assertNotIn("Tarefa adicionada!", mensagens)
         self.assertEqual(main.carregar_tarefas(), [])
 
 
