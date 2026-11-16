@@ -41,7 +41,7 @@ class TestGerenciadorDeTarefas(unittest.TestCase):
     def test_listar_tarefas_vazias_informa_que_nao_ha_tarefas(self):
         with patch("builtins.print") as imprimir:
             main.listar_tarefas([])
-        imprimir.assert_called_once_with("\\nNenhuma tarefa cadastrada.")
+        imprimir.assert_called_once_with("\nNenhuma tarefa cadastrada.")
 
     def test_listar_tarefas_exibe_status_e_descricao(self):
         tarefas = [
@@ -50,7 +50,7 @@ class TestGerenciadorDeTarefas(unittest.TestCase):
         ]
         with patch("builtins.print") as imprimir:
             main.listar_tarefas(tarefas)
-        saida = "\\n".join(str(chamada.args[0]) for chamada in imprimir.call_args_list)
+        saida = "\n".join(str(chamada.args[0]) for chamada in imprimir.call_args_list)
         self.assertIn("[Pendente] Estudar testes", saida)
         self.assertIn("[Concluída] Atualizar README", saida)
 
