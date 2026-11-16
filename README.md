@@ -18,6 +18,7 @@ O programa permite adicionar, listar, concluir e excluir tarefas por meio de um 
 - **Excluir tarefas:** remove uma tarefa cadastrada.
 - **Persistência de dados:** salva e carrega as tarefas em um arquivo JSON.
 - **Validação de entradas:** trata descrições vazias, números inválidos e opções incorretas do menu.
+- **Tratamento de falhas ao salvar:** informa quando ocorre um erro de gravação e só confirma alterações após o salvamento bem-sucedido.
 
 ## Tecnologias utilizadas
 
@@ -62,7 +63,7 @@ As tarefas são armazenadas no arquivo `tarefas.json`, criado na pasta do projet
 
 ## Testes automatizados
 
-O projeto possui **7 testes automatizados** escritos com a biblioteca `unittest`. Eles verificam:
+O projeto possui **9 testes automatizados** escritos com a biblioteca `unittest`. Eles verificam:
 
 1. Se o programa retorna uma lista vazia quando o arquivo de tarefas ainda não existe.
 2. Se tarefas são carregadas corretamente a partir de um JSON válido.
@@ -71,6 +72,8 @@ O projeto possui **7 testes automatizados** escritos com a biblioteca `unittest`
 5. Se o programa informa quando não há tarefas cadastradas.
 6. Se a listagem apresenta corretamente a descrição e o status das tarefas.
 7. Se o fluxo de adicionar, concluir e excluir uma tarefa funciona como esperado.
+8. Se uma falha de gravação é informada corretamente.
+9. Se o programa não confirma a adição de uma tarefa quando o salvamento falha.
 
 Para executar os testes localmente, use:
 
@@ -158,7 +161,7 @@ Tasks are stored in a `tarefas.json` file, which is created in the project direc
 
 ## Automated Tests
 
-The project includes **7 automated tests** written with Python's `unittest` library. They check:
+The project includes **9 automated tests** written with Python's `unittest` library. They check:
 
 1. Whether the application returns an empty list when the task file does not exist.
 2. Whether tasks are correctly loaded from valid JSON.
@@ -167,6 +170,8 @@ The project includes **7 automated tests** written with Python's `unittest` libr
 5. Whether the application reports when there are no registered tasks.
 6. Whether the task list displays each description and status correctly.
 7. Whether the workflow for adding, completing, and deleting a task works as expected.
+8. Whether a file-saving failure is reported correctly.
+9. Whether the application avoids confirming a task addition when saving fails.
 
 To run the tests locally:
 
