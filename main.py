@@ -1,4 +1,3 @@
-
 import json
 from pathlib import Path
 
@@ -15,10 +14,15 @@ def carregar_tarefas():
 
 
 def salvar_tarefas(tarefas):
-    ARQUIVO.write_text(
-        json.dumps(tarefas, ensure_ascii=False, indent=4),
-        encoding="utf-8"
-    )
+    try:
+        ARQUIVO.write_text(
+            json.dumps(tarefas, ensure_ascii=False, indent=4),
+            encoding="utf-8"
+        )
+        return True
+    except OSError:
+        print("Erro ao salvar as tarefas.")
+        return False
 
 
 def listar_tarefas(tarefas):
@@ -51,12 +55,13 @@ def main():
         elif opcao == "2":
             descricao = input("Descrição da tarefa: ").strip()
             if descricao:
-                tarefas.append({
+                novas_tarefas = tarefas + [{
                     "descricao": descricao,
                     "concluida": False
-                })
-                salvar_tarefas(tarefas)
-                print("Tarefa adicionada!")
+                }]
+                if salvar_tarefas(novas_tarefas):
+                    tarefas = novas_tarefas
+                    print("Tarefa adicionada!")
             else:
                 print("A descrição não pode ficar vazia.")
 
@@ -66,9 +71,11 @@ def main():
                 try:
                     numero = int(input("Número da tarefa concluída: "))
                     if 1 <= numero <= len(tarefas):
-                        tarefas[numero - 1]["concluida"] = True
-                        salvar_tarefas(tarefas)
-                        print("Tarefa concluída!")
+                        novas_tarefas = [dict(tarefa) for tarefa in tarefas]
+                        novas_tarefas[numero - 1]["concluida"] = True
+                        if salvar_tarefas(novas_tarefas):
+                            tarefas = novas_tarefas
+                            print("Tarefa concluída!")
                     else:
                         print("Número inválido.")
                 except ValueError:
@@ -80,9 +87,11 @@ def main():
                 try:
                     numero = int(input("Número da tarefa a excluir: "))
                     if 1 <= numero <= len(tarefas):
-                        tarefas.pop(numero - 1)
-                        salvar_tarefas(tarefas)
-                        print("Tarefa excluída!")
+                        novas_tarefas = tarefas.copy()
+                        novas_tarefas.pop(numero - 1)
+                        if salvar_tarefas(novas_tarefas):
+                            tarefas = novas_tarefas
+                            print("Tarefa excluída!")
                     else:
                         print("Número inválido.")
                 except ValueError:
